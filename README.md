@@ -1,11 +1,11 @@
 # lrc2vid
 
-Generate music video from lyrics (`.lrc`) file using VQGAN+CLIP
+Generate music video from lyrics (`.lrc`) file using VQGAN-CLIP
 
 ## Install
 
-1. Clone repo from [VQGAN+CLIP](https://github.com/nerdyrodent/VQGAN-CLIP) and follow all instructions
-2. Clone `lrc2vid` repo inside `VQGAN+CLIP`
+1. Clone [`VQGAN-CLIP`](https://github.com/nerdyrodent/VQGAN-CLIP) and follow the set-up instructions
+2. Clone `lrc2vid` (this repo) repo as a subfolder of `VQGAN-CLIP`
 3. Install dependency `pip install pylrc`
 
 ## Example
