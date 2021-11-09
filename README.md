@@ -1,6 +1,6 @@
 # lrc2vid
 
-Generate video from lyrics (`.lrc`) file using VQGAN+CLIP
+Generate music video from lyrics (`.lrc`) file using VQGAN+CLIP
 
 ## Install
 
