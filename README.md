@@ -1,6 +1,6 @@
 # lrc2vid
 
-Generate video from lyrics (.lrc) file using VQGAN+CLIP
+Generate music video from lyrics (`.lrc`) file using VQGAN+CLIP
 
 ## Install
 
@@ -10,6 +10,7 @@ Generate video from lyrics (.lrc) file using VQGAN+CLIP
 
 ## Example use
 
+[sample video](https://www.youtube.com/watch?v=11Oevt0quuo)
 `python lrc2vid/lrc2vid.py -ii julie.png -l my_favourite_things.lrc -a my_favourite_things.wav -y "by Edward Hopper:0.6" -o my_favourite_things_hopper`
 
-will (eventually) generate the output `my_favourite_things_hopper/out.mp4`
+will generate the output `my_favourite_things_hopper/out.mp4`. GPU recommended.
