@@ -8,13 +8,9 @@ Generate music video from lyrics (`.lrc`) file using VQGAN+CLIP
 2. Clone `lrc2vid` repo inside `VQGAN+CLIP`
 3. Install dependency `pip install pylrc`
 
-
 ## Example
 
-[![sample video](img/0.png)](https://www.youtube.com/watch?v=11Oevt0quuo)
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/11Oevt0quuo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
+[![sample video](https://img.youtube.com/vi/11Oevt0quuo/0.jpg)](https://www.youtube.com/watch?v=11Oevt0quuo)
 
 The above video in the style of Edward Hopper was generated using the command
 
