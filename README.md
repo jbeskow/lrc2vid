@@ -13,6 +13,9 @@ Generate music video from lyrics (`.lrc`) file using VQGAN+CLIP
 
 [![sample video](img/0.png)](https://www.youtube.com/watch?v=11Oevt0quuo)
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/11Oevt0quuo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
 The above video in the style of Edward Hopper was generated using the command
 
 `python lrc2vid/lrc2vid.py -ii julie.png -l my_favourite_things.lrc -a my_favourite_things.wav -y "by Edward Hopper:0.6" -o my_favourite_things_hopper`
