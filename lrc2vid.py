@@ -8,6 +8,8 @@ import shutil
 import argparse
 import pylrc
 
+cmdline = ' '.join(sys.argv)
+
 parser = argparse.ArgumentParser('lyrics to video using VQGAN+CLIP')
 
 parser.add_argument('-fps','--frames_per_second',type=float,default=10,dest='fps')
@@ -36,14 +38,15 @@ length = -1
 with open(lrcfile) as f:
 
     os.mkdir(outdir)
-
+    with open(outdir+'/cmd.txt','w') as ff:
+        ff.write(cmdline)
     lyrics = pylrc.parse(''.join(f.readlines()))
     lines = []
     for line in lyrics:
         lines.append((line.time,line.text))
     if lyrics.length != '':
-        pt = datetime.datetime.strptime(lyrics.length, '%M:%S.%f')
-        endtime = pt.minute*60+pt.second+pt.microsecond*0.000001
+        pt = datetime.datetime.strptime(lyrics.length.split('.')[0], '%M:%S')
+        endtime = pt.minute*60+pt.second
     else:
         endtime = lines[-1][0]+5.0
     lines.append((endtime,''))
@@ -67,6 +70,7 @@ with open(lrcfile) as f:
             cmd.append('-ii')
             cmd.append(initialimage)
         print('cmd=',cmd)
+        shutil.rmtree('steps', ignore_errors=True)
         subprocess.call(cmd,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
         segdir = os.path.join(outdir,seg)
         os.rename('steps',segdir)
