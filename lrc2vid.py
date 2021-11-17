@@ -21,7 +21,10 @@ parser.add_argument('-l','--lyrics_file',type=str,default=None,dest='lrc')
 parser.add_argument('-a','--audio_file',type=str,default=None,dest='audio')
 parser.add_argument('-o','--output_dir',type=str,default='out',dest='outdir')
 
-args = parser.parse_args()
+#args = parser.parse_args()
+args, unknownargs = parser.parse_known_args()
+
+print('extra args (will be passed to generate.py):',unknownargs)
 
 fps = args.fps
 initialimage  = args.init_image
@@ -73,7 +76,7 @@ if args.lrc:
             nframes = int((secs - currtime)*fps)
             print('seg:',seg,', time:',currtime,
                   ', prompt:',prompt,', nframes:',nframes)
-            cmd = ['python','generate.py']
+            cmd = ['python','generate.py'] + unknownargs
             if prompt:
                 cmd.append('-p')
                 cmd.append('{}|{}'.format(prompt,args.style))
