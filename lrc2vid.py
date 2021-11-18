@@ -11,17 +11,14 @@ from PIL import Image
 
 
 parser = argparse.ArgumentParser('lyrics to video using VQGAN+CLIP')
-
 parser.add_argument('-fps','--frames_per_second',type=float,default=10,dest='fps')
 parser.add_argument('-ii','--init_image',type=str,default=None,dest='init_image')
-parser.add_argument('-ip','--init_prompt',type=str,default=None,dest='init_prompt')
+parser.add_argument('-ip','--init_prompt',type=str,default='',dest='init_prompt')
 parser.add_argument('-y','--style',type=str,default='A painting in the style of salvador Dali:0.2',dest='style')
 parser.add_argument('-s','--size',nargs=2, type=int, help='Image size (width height)', default=[640,480], dest='size')
 parser.add_argument('-l','--lyrics_file',type=str,default=None,dest='lrc')
 parser.add_argument('-a','--audio_file',type=str,default=None,dest='audio')
 parser.add_argument('-o','--output_dir',type=str,default='out',dest='outdir')
-
-#args = parser.parse_args()
 args, unknownargs = parser.parse_known_args()
 
 print('extra args (will be passed to generate.py):',unknownargs)
@@ -32,11 +29,10 @@ initialprompt = args.init_prompt
 lrcfile       = args.lrc
 audiofile     = args.audio
 outdir        = args.outdir
-
-prompt = initialprompt
-currtime = 0
-segment = 1
-length = -1
+prompt     = initialprompt
+currtime   = 0
+segment    = 1
+length     = -1
 
 def imresize(iimg,oimg,size):
     i1 = Image.open(iimg)
@@ -64,16 +60,28 @@ if args.lrc:
             lines.append((line.time,line.text))
                     
         if lyrics.length != '':
+            try:
+                pt = datetime.datetime.strptime(lyrics.length, '%M:%S.%f')
+            except:
+                pt = datetime.datetime.strptime(lyrics.length.split('.')[0], '%M:%S')
             pt = datetime.datetime.strptime(lyrics.length.split('.')[0], '%M:%S')
-            endtime = pt.minute*60+pt.second
+
+            endtime = pt.minute*60+pt.second+pt.microsecond*1e-6
+            
         else:
             endtime = lines[-1][0]+5.0
-
+        print('endtime:',endtime)
         lines.append((endtime,''))
     
         for (secs,txt) in lines:
+            txt = txt.replace('\'','')
+
             seg = 'segment{}'.format(str(segment).zfill(3))
             nframes = int((secs - currtime)*fps)
+            if nframes <= 0:
+                prompt += ',' + txt
+                continue
+                
             print('seg:',seg,', time:',currtime,
                   ', prompt:',prompt,', nframes:',nframes)
             cmd = ['python','generate.py'] + unknownargs
@@ -107,10 +115,10 @@ if args.lrc:
             except:
                 print('too few frames!')
             
-            prompt = txt.replace('\'','')
             currtime = secs
             segment +=1
-
+            prompt = txt
+            
 vidfile = outdir+'/vid.mp4'
 outfile = outdir+'/out.mp4'
 
